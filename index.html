@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+      body, html {
+          height: 100%;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: Arial, sans-serif;
+      }
+      .container {
+          text-align: center;
+      }
+      .container input, .container button {
+          margin: 10px;
+      }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <label id="text1" for="myInput">Username:</label>
+    <input type="text" id="myInput" />
+    
+    <label id="text2" for="myInput2">Password:</label>
+    <input type="text" id="myInput2" />
+    <button id="inputButton" onclick="processInput()">Submit</button>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+
+</html>
