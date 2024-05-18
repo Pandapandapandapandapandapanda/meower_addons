@@ -11,7 +11,7 @@ let password = ""
 
 const imageCmds = {
   "mew": "https://uploads.meower.org/attachments/rt1ESZLHIYUhwDaT51eBVd4t/mewing.png",
-  "flooshed": "https://uploads.meower.org/attachments/t5tRSafnbC0oWte4HOsz8EjY/3x.png"
+  "flooshed": "https://uploads.meower.org/attachments/1aSwGI69ua5198P3sB1JbiNe/download_(8).jpeg"
 }
 
 function connectToWebSocket() {
@@ -97,6 +97,19 @@ function sendMessage(message, channel, attach) {
   });
 }
 
+function block(user, state){
+  fetch(`https://api.meower.org/users/${user}/relationship`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Token": token
+    },
+    body: JSON.stringify({
+      "state": state
+    })
+  })
+}
+
 function editMessage(id, newPost){
   console.log(id);
   fetch(`https://api.meower.org/posts?id=${id}`, {
@@ -172,9 +185,16 @@ async function onPing(sender, channel, id, text){
   } else if (text[0] in imageCmds){
     deletePost(id);
     sendMessage("", channel, (await uploadImage(await (await fetch(imageCmds[text[0]])).blob())).id);
-  } //else if (text[0] == "bl" || text[0] == "blacklist" || text[0] == "block"){
-    
-  //}
+  } else if (text[0] == "bl" || text[0] == "blacklist" || text[0] == "block"){
+    deletePost(id);
+    block(text[1], 2);
+  } else if (text[0] == "unbl" || text[0] == "unblacklist" || text[0] == "unblock"){
+    deletePost(id);
+    block(text[1], 0);
+  } else if (text[0] == "cb" || text[0] == "changestate"){
+    deletePost(id);
+    block(text[1], text[2]);
+  }
 }
 
 function handleIncomingPacket(packet) {
