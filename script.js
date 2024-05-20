@@ -8,12 +8,16 @@ let cloudlink;
 
 let username = ""
 let password = ""
+let dmID = {};
+let botRep = {};
 
 const imageCmds = {
   "mew": "https://uploads.meower.org/attachments/rt1ESZLHIYUhwDaT51eBVd4t/mewing.png",
   "flooshed": "https://uploads.meower.org/attachments/1aSwGI69ua5198P3sB1JbiNe/download_(8).jpeg",
   "meow": "https://uploads.meower.org/attachments/dbvbVvD9u9e5PRq04mglyZ26/SPOILER_2024-04-22_13-18-30_2.png"
-}
+};
+const fq = ["https://uploads.meower.org/attachments/YlqBYCi7dUWBWt1ptE7eDyfh/FDA44EEFDF7B47FEA69D.png", "https://uploads.meower.org/attachments/eLa9qNgGMUMxw0WJ9oQNXY5I/BAD0C42C0E924A449495.gif", "https://uploads.meower.org/attachments/IK1jcbjGl9KsAk9k18tN7da9/24C7CE2B91DC40E992B5.gif", "https://uploads.meower.org/attachments/mgYAri94LzypbqW1b9aMqCUO/A372E9321EF1414BACA8.gif", "https://uploads.meower.org/attachments/0Wmh24Nab2b4ZwHWE6GSMbao/F063A19FAF8744D9898B.gif", "https://uploads.meower.org/attachments/ER5omyr4AUa4MZohljat2Z44/6801838A7E4646B6AA14.gif"];
+const commands = "test";
 
 function connectToWebSocket() {
   cloudlink = new WebSocket("wss://server.meower.org");
@@ -67,10 +71,10 @@ async function getDM(sender){
 function sendMessage(message, channel, attach) {
   console.log(message, channel);
   let url = 'https://api.meower.org/home';
-  if (channel !== 'home') {
+  if (channel != 'home') {
     url = `https://api.meower.org/posts/${channel}`;
   }
-
+  console.log(url);
   return fetch(url, {
     method: 'POST',
     headers: {
@@ -79,7 +83,7 @@ function sendMessage(message, channel, attach) {
     },
     body: JSON.stringify({
       content: message,
-      attachments: [`${attach}`]
+      attachments: attach? [`${attach}`] : []
     })
   })
   .then(response => {
@@ -175,8 +179,14 @@ function uploadImage(blob){
  })
 }
 
+function botReplace(bot, message, channel){
+  console.log(bot, botRep[bot], message, channel);
+  sendMessage(`@${botRep[bot]} ${message}`, channel, "");
+}
+
 async function onPing(sender, channel, id, text){
   console.info(`Received message ${text} from ${sender} in ${channel} with id ${id}`);
+  if (botRep[text.charAt(0)]) {botReplace(text.charAt(0), text.slice(1), channel); deletePost(id); return;}
   if (!text.startsWith("!")) {return;}
   text = text.slice(1);
   text = text.toLowerCase().split(" ");
@@ -189,12 +199,24 @@ async function onPing(sender, channel, id, text){
   } else if (text[0] == "bl" || text[0] == "blacklist" || text[0] == "block"){
     deletePost(id);
     block(text[1], 2);
-  } else if (text[0] == "unbl" || text[0] == "unblacklist" || text[0] == "unblock"){
+  } else if (text[0] == "ub" || text[0] == "unblacklist" || text[0] == "unblock"){
     deletePost(id);
     block(text[1], 0);
   } else if (text[0] == "cb" || text[0] == "changestate"){
     deletePost(id);
     block(text[1], text[2]);
+  } else if (text[0] == "help" || text[0] == "commands"){
+    //console.log("!!!", await getDM("gc"));
+    sendMessage(commands, await getDM(username), "");
+    deletePost(id);
+  } else if (text[0] == "setbot" || text[0] == "sb"){
+    if (!botRep[text[2]]){
+      botRep[text[2]] = text[1];
+      deletePost(id);
+    }
+  } else if (text[0] == "femquote" || text[0] == "fq" || text[0] == "femboyquote"){
+    deletePost(id);
+    sendMessage("", channel, (await uploadImage(await (await fetch(fq[Math.floor(Math.random()*fq.length)])).blob())).id);
   }
 }
 
