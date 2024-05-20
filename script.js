@@ -11,7 +11,8 @@ let password = ""
 
 const imageCmds = {
   "mew": "https://uploads.meower.org/attachments/rt1ESZLHIYUhwDaT51eBVd4t/mewing.png",
-  "flooshed": "https://uploads.meower.org/attachments/1aSwGI69ua5198P3sB1JbiNe/download_(8).jpeg"
+  "flooshed": "https://uploads.meower.org/attachments/1aSwGI69ua5198P3sB1JbiNe/download_(8).jpeg",
+  "meow": "https://uploads.meower.org/attachments/dbvbVvD9u9e5PRq04mglyZ26/SPOILER_2024-04-22_13-18-30_2.png"
 }
 
 function connectToWebSocket() {
