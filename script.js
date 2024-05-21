@@ -10,6 +10,7 @@ let username = ""
 let password = ""
 let dmID = {};
 let botRep = {};
+let textRep = {};
 
 const imageCmds = {
   "bru": "https://uploads.meower.org/attachments/KLwTUjxNu08733AwrtAaxHbx/bru.jpg",
@@ -186,10 +187,18 @@ function botReplace(bot, message, channel){
   sendMessage(`@${botRep[bot]} ${message}`, channel, "");
 }
 
+function textReplace(text, id){
+  for (const value in textRep){
+    let regex = new RegExp(value, "gi");
+    text = text.replace(regex, textRep[value])
+  }
+  editMessage(id, text);
+}
+
 async function onPing(sender, channel, id, text){
   console.info(`Received message ${text} from ${sender} in ${channel} with id ${id}`);
   if (botRep[text.charAt(0)]) {botReplace(text.charAt(0), text.slice(1), channel); deletePost(id); return;}
-  if (!text.startsWith("!")) {return;}
+  if (!text.startsWith("!")) {textReplace(text, id); return;}
   text = text.slice(1);
   text = text.toLowerCase().split(" ");
   console.info(text);
@@ -214,11 +223,28 @@ async function onPing(sender, channel, id, text){
   } else if (text[0] == "setbot" || text[0] == "sb"){
     if (!botRep[text[2]]){
       botRep[text[2]] = text[1];
-      deletePost(id);
     }
+    deletePost(id);
   } else if (text[0] == "femquote" || text[0] == "fq" || text[0] == "femboyquote"){
     deletePost(id);
     sendMessage("", channel, (await uploadImage(await (await fetch(fq[Math.floor(Math.random()*fq.length)])).blob())).id);
+  } else if (text[0] == "rembot" || text[0] == "rb"){
+    delete botRep[text[2]];
+    deletePost(id);
+  } else if (text[0] == "textreplace" || text[0] == "tr"){
+    if (!textRep[text[1]]){
+      textRep[text[1]] = text[2];
+    }
+    deletePost(id);
+  } else if (text[0] == "rtr" || text[0] == "remtextreplace"){
+    delete textRep[text[1]];
+    deletePost(id);
+  } else if (text[0] == "cleartr"){
+    textRep = {};
+    deletePost(id);
+  } else if (text[0] == "clearbot"){
+    botRep = {};
+    deletePost(id);
   }
 }
 
