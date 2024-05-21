@@ -22,6 +22,10 @@ const imageCmds = {
 const fq = ["https://uploads.meower.org/attachments/YlqBYCi7dUWBWt1ptE7eDyfh/FDA44EEFDF7B47FEA69D.png", "https://uploads.meower.org/attachments/eLa9qNgGMUMxw0WJ9oQNXY5I/BAD0C42C0E924A449495.gif", "https://uploads.meower.org/attachments/IK1jcbjGl9KsAk9k18tN7da9/24C7CE2B91DC40E992B5.gif", "https://uploads.meower.org/attachments/mgYAri94LzypbqW1b9aMqCUO/A372E9321EF1414BACA8.gif", "https://uploads.meower.org/attachments/0Wmh24Nab2b4ZwHWE6GSMbao/F063A19FAF8744D9898B.gif", "https://uploads.meower.org/attachments/ER5omyr4AUa4MZohljat2Z44/6801838A7E4646B6AA14.gif", "https://uploads.meower.org/attachments/HFcFgbkHBbmhlM3k3HxK50lZ/79E9ADF2642F4846804D.gif", "https://uploads.meower.org/attachments/HSLxjMfbWBwcQwSeA4zAiOqx/C8A86854B17B483994CD.gif", "https://uploads.meower.org/attachments/xiJLP5r8g6IZn9XgbMqMffnq/DDF1A5A4A9074731B653.gif"];
 const commands = "test";
 
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function connectToWebSocket() {
   cloudlink = new WebSocket("wss://server.meower.org");
   cloudlink.onmessage = onMessage;
@@ -182,8 +186,9 @@ function uploadImage(blob){
  })
 }
 
-function botReplace(bot, message, channel){
+async function botReplace(bot, message, channel){
   console.log(bot, botRep[bot], message, channel);
+  await wait(100);
   sendMessage(`@${botRep[bot]} ${message}`, channel, "");
 }
 
