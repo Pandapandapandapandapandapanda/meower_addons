@@ -13,7 +13,7 @@ let botRep = {};
 
 const imageCmds = {
   "mew": "https://uploads.meower.org/attachments/rt1ESZLHIYUhwDaT51eBVd4t/mewing.png",
-  "flooshed": "https://uploads.meower.org/attachments/1aSwGI69ua5198P3sB1JbiNe/download_(8).jpeg",
+  "flooshed": "https://uploads.meower.org/attachments/OeaSRmBw9ibAQwYOlsDVjBJ0/3x.png",
   "meow": "https://uploads.meower.org/attachments/dbvbVvD9u9e5PRq04mglyZ26/SPOILER_2024-04-22_13-18-30_2.png"
 };
 const fq = ["https://uploads.meower.org/attachments/YlqBYCi7dUWBWt1ptE7eDyfh/FDA44EEFDF7B47FEA69D.png", "https://uploads.meower.org/attachments/eLa9qNgGMUMxw0WJ9oQNXY5I/BAD0C42C0E924A449495.gif", "https://uploads.meower.org/attachments/IK1jcbjGl9KsAk9k18tN7da9/24C7CE2B91DC40E992B5.gif", "https://uploads.meower.org/attachments/mgYAri94LzypbqW1b9aMqCUO/A372E9321EF1414BACA8.gif", "https://uploads.meower.org/attachments/0Wmh24Nab2b4ZwHWE6GSMbao/F063A19FAF8744D9898B.gif", "https://uploads.meower.org/attachments/ER5omyr4AUa4MZohljat2Z44/6801838A7E4646B6AA14.gif"];
