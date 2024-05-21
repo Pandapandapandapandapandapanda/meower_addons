@@ -12,7 +12,7 @@ let dmID = {};
 let botRep = {};
 
 const imageCmds = {
-  "mew": "https://uploads.meower.org/attachments/rt1ESZLHIYUhwDaT51eBVd4t/mewing.png",
+  //"mew": "https://uploads.meower.org/attachments/rt1ESZLHIYUhwDaT51eBVd4t/mewing.png",
   "flooshed": "https://uploads.meower.org/attachments/OeaSRmBw9ibAQwYOlsDVjBJ0/3x.png",
   "meow": "https://uploads.meower.org/attachments/dbvbVvD9u9e5PRq04mglyZ26/SPOILER_2024-04-22_13-18-30_2.png"
 };
@@ -192,7 +192,7 @@ async function onPing(sender, channel, id, text){
   text = text.toLowerCase().split(" ");
   console.info(text);
   if (text[0] == "mewing"){
-    editMessage(id, "🤫🧏", "");
+    editMessage(id, "MEWING IS BAD!!!", "");
   } else if (text[0] in imageCmds){
     deletePost(id);
     sendMessage("", channel, (await uploadImage(await (await fetch(imageCmds[text[0]])).blob())).id);
