@@ -10,7 +10,10 @@ let username = ""
 let password = ""
 let dmID = {};
 let botRep = {};
-let textRep = {};
+let textRep = {
+  "cat": "car",
+  "car": "cat"
+};
 
 const imageCmds = {
   "bru": "https://uploads.meower.org/attachments/KLwTUjxNu08733AwrtAaxHbx/bru.jpg",
