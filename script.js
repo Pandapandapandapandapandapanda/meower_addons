@@ -14,6 +14,7 @@ let textRep = {
   "cat": "car",
   "car": "cat"
 };
+let blockText = [];
 
 const imageCmds = {
   "bru": "https://uploads.meower.org/attachments/KLwTUjxNu08733AwrtAaxHbx/bru.jpg",
@@ -253,6 +254,15 @@ async function onPing(sender, channel, id, text){
   } else if (text[0] == "clearbot"){
     botRep = {};
     deletePost(id);
+  } else if (text[0] == "blocktext" || text[0] == "bt"){
+    blockText.push(text[1]);
+    deletePost(id);
+  } else if (text[0] == "remblocktext" || text[0] == "rbt"){
+    blockText.splice(blockText.indexOf(text[1]), 1);
+    deletePost(id);
+  } else if (text[0] == "clearblocktext" || text[0] == "cbc"){
+    blockText = [];
+    deletePost(id);
   }
 }
 
@@ -272,6 +282,8 @@ function handleIncomingPacket(packet) {
     mostRecentPostID = packet.val.post_id;
     if (packet.val.u.toLowerCase().includes(`${username.toLowerCase()}`)) {
       onPing(packet.val.u, packet.val.post_origin, packet.val._id, packet.val.p);
+    } else if (blockText.includes(packet.val.p)){
+      block(packet.val.u, 2)
     }
   }
 }
