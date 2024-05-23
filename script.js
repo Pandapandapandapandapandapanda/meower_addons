@@ -18,6 +18,7 @@ let textRep = {
 };
 let blockText = [];
 let saveChat;
+let joke = false;
 
 const imageCmds = {
   "bru": "https://uploads.meower.org/attachments/KLwTUjxNu08733AwrtAaxHbx/bru.jpg",
@@ -258,7 +259,7 @@ function textReplace(text, id){
     let regex = new RegExp(value, "gi");
     text = text.replace(regex, textRep[value])
   }
-  editMessage(id, text);
+  editMessage(id, `${text} /j`);
 }
 
 async function onPing(sender, channel, id, text){
@@ -320,6 +321,8 @@ async function onPing(sender, channel, id, text){
   } else if (text[0] == "clearblocktext" || text[0] == "cbc"){
     blockText = [];
     deletePost(id);
+  } else if (text[0] == "ej"){
+    joke = !joke;
   }
 }
 
